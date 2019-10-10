@@ -1,0 +1,14 @@
+project(RainRemoval)
+add_executable(RainRemoval main.cpp)
+
+# add lib of opencv
+target_link_libraries(RainRemoval opencv_core)
+target_link_libraries(RainRemoval opencv_imgproc)
+target_link_libraries(RainRemoval opencv_imgcodecs)
+target_link_libraries(RainRemoval opencv_video)
+target_link_libraries(RainRemoval opencv_ml)
+target_link_libraries(RainRemoval opencv_highgui)
+target_link_libraries(RainRemoval opencv_objdetect)
+target_link_libraries(RainRemoval opencv_flann)
+target_link_libraries(RainRemoval opencv_photo)
+target_link_libraries(RainRemoval opencv_videoio)

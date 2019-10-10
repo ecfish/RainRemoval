@@ -1,0 +1,15 @@
+project(RainRemoval_SP)
+add_executable(RainRemoval_SP SPAlgorithm.cpp)
+
+# add lib of opencv
+target_link_libraries(RainRemoval_SP opencv_core)
+target_link_libraries(RainRemoval_SP opencv_imgproc)
+target_link_libraries(RainRemoval_SP opencv_imgcodecs)
+target_link_libraries(RainRemoval_SP opencv_video)
+target_link_libraries(RainRemoval_SP opencv_ml)
+target_link_libraries(RainRemoval_SP opencv_highgui)
+target_link_libraries(RainRemoval_SP opencv_objdetect)
+target_link_libraries(RainRemoval_SP opencv_flann)
+target_link_libraries(RainRemoval_SP opencv_photo)
+target_link_libraries(RainRemoval_SP opencv_videoio)
+target_link_libraries(RainRemoval_SP opencv_ximgproc)
