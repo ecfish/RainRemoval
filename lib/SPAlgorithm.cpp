@@ -6,25 +6,24 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/ximgproc.hpp>
+#include <SPAlgorithm.h>
 
-void SuperPixelSLIC(cv::Mat I){
-    cv::Mat labels, mask;
-    cv::namedWindow("SLIC", CV_WINDOW_AUTOSIZE);
+SPSegmentResult SuperPixelSLIC(const cv::Mat I, int pixelSize, int iterations, bool ifEnforceLabelConnectivity){
+    SPSegmentResult ret;
+    
+    ret.IMask  = new cv::Mat();
+    ret.ILabel = new cv::Mat();
 
-    cv::Ptr <cv::ximgproc::SuperpixelSLIC> slic = cv::ximgproc::createSuperpixelSLIC(I);
-    slic->iterate();//迭代次数，默认为10
-    slic->enforceLabelConnectivity();
-    slic->getLabelContourMask(mask);//获取超像素的边界
-    slic->getLabels(labels);//获取labels
-    int number = slic->getNumberOfSuperpixels();//获取超像素的数量
+    cv::Ptr <cv::ximgproc::SuperpixelSLIC> slic = \
+    cv::ximgproc::createSuperpixelSLIC(I, cv::ximgproc::SLICO, pixelSize);
+    
+    slic->iterate(iterations);
+    if (ifEnforceLabelConnectivity)
+        slic->enforceLabelConnectivity();
 
-    I.setTo(cv::Scalar(255, 255, 255), mask);
-    cv::imshow("SLIC", I);
-    return;
-}
-
-int main(int argc, char* argv[]){
-    cv::Mat img = cv::imread(argv[1]);
-    SuperPixelSLIC(img);
-    return 0;
+    slic->getLabelContourMask(*(ret.IMask));
+    slic->getLabels(*(ret.ILabel));
+    ret.pixelNums = slic->getNumberOfSuperpixels();
+    
+    return ret;
 }
