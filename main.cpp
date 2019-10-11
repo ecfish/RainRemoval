@@ -1,18 +1,27 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <SPAlgorithm.h>
+#include <VideoProcess.h>
+#include <Exceptions.h>
 
-int main()
-{
-    cv::VideoCapture capture;
-    cv::Mat frame;
+int main(int argc, char* argv[]){
+    /* Read video file */
+    Video videoRain(argv[1]);
 
-    capture.open("./data/rain001.mp4");
-    cv::namedWindow("Rain", CV_WINDOW_AUTOSIZE);
-    while (capture.read(frame)){
-        cv::imshow("Rain", frame);
+    cv::namedWindow("Video", cv::WINDOW_AUTOSIZE);
+    while (true){
+        try{
+            cv::Mat currentFrame = videoRain.nextFrame();
+            SPSegmentResult SPres = SuperPixelSLIC(currentFrame, 30);
+            currentFrame.setTo((255, 255, 255), *(SPres.IMask));
+            cv::imshow("Video", currentFrame);
+
+        }
+        catch(const int err){
+            break;
+        }
         cv::waitKey(10);
     }
 
-    capture.release();
     return 0;
 }
