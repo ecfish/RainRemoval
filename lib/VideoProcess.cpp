@@ -43,10 +43,19 @@ Video::~Video(){
 }
 
 cv::Mat Video::nextFrame(){
-    int i = 0;
+    unsigned int i = 0;
     for (; i<_frameStep && _videoCapture.read(_currentFrame); i++);
     if (i!=_frameStep){
         throw VEXCEPTION::NONE_REST_VIDEO_FRAME;
     }
     return _currentFrame;
+}
+
+cv::Mat Video::nextFrame(cv::Mat& frame){
+    unsigned int i = 0;
+    for (; i<_frameStep && _videoCapture.read(frame); i++);
+    if (i!=_frameStep){
+        throw VEXCEPTION::NONE_REST_VIDEO_FRAME;
+    }
+    return frame;
 }
