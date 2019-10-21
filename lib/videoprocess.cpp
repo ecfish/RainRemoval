@@ -4,7 +4,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <VideoProcess.h>
+#include <videoprocess.h>
 #include <Exceptions.h>
 
 Video::Video(const char* video_src){
@@ -48,7 +48,7 @@ cv::Mat Video::nextFrame(){
     if (i!=_frameStep){
         throw VEXCEPTION::NONE_REST_VIDEO_FRAME;
     }
-    return _currentFrame;
+    return _currentFrame.clone();
 }
 
 cv::Mat Video::nextFrame(cv::Mat& frame){
